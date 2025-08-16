@@ -1,7 +1,7 @@
+import "express-async-errors";
 import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth.routes.js";
-import "express-async-errors";
 import { errorHandler } from "./middlewares/error.middleware.js";
 // import itemRoutes from './routes/item.routes.js';
 // import bookingRoutes from './routes/booking.routes.js';

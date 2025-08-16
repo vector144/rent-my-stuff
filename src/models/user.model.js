@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { RoleIds } from "../enums/roles.enum.js";
 
 const UserModel = mongoose.Schema(
   {
@@ -13,6 +14,12 @@ const UserModel = mongoose.Schema(
     },
     password: {
       type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: Object.values(RoleIds),
+      default: RoleIds.USER,
       required: true,
     },
   },
