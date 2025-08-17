@@ -14,9 +14,6 @@ export const saveItem = async (req, res) => {
   } = req.body;
   let item;
 
-  if (!name || !description || !price || !category) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
   if (id) {
     item = await Item.findByIdAndUpdate(
       id,
@@ -37,7 +34,7 @@ export const saveItem = async (req, res) => {
     }
     return sendResponse(res, item, "Item updated successfully");
   } else {
-    item = Item.create({
+    item = await Item.create({
       name,
       description,
       price,

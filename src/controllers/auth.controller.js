@@ -78,8 +78,7 @@ export const logout = async (req, res) => {
     res.status(401);
     throw new Error("Not authorized, no token");
   }
-  console.log("Decoded Token:", decoded, token);
-  if (!decoded || !decoded.exp) {
+    if (!decoded || !decoded.exp) {
     throw new Error("Invalid Token");
   }
   const expiry = new Date(decoded.exp * 1000);
