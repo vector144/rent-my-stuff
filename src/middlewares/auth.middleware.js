@@ -19,14 +19,16 @@ export const protect = async (req, res, next) => {
       return res.status(401).json({ message: "Token is blacklisted" });
     }
 
-      req.user = await User.findById(decoded._id).select("-password"); 
+      req.user = await User.findById(decoded.id).select("-password"); 
       return next();
     } catch (error) {
+      console.error("Token verification failed:", error);
       res.status(401);
       throw new Error("Not authorized, token failed");
     }
   }
 
+  console.log("Token not found in headers",token);
   if (!token) {
     res.status(401);
     throw new Error("Not authorized, no token");

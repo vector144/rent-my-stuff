@@ -5,6 +5,8 @@ import generateToken from "../utils/generateToken.js";
 import { RoleLabels } from "../enums/roles.enum.js";
 import getTokenFromHeader from "../utils/getTokenFromHeader.js";
 import BlackList from "../models/blackList.model.js";
+import { sendResponse } from "../utils/responseFormatter.js";
+
 export const register = async (req, res) => {
   const { name, password, email } = req.body;
 
@@ -21,7 +23,7 @@ export const register = async (req, res) => {
     password: hashedPassword,
   });
   const payload = {
-    _id: user.id,
+    id: user.id,
     email: user.email,
     role: user.role,
     roleLabel: RoleLabels[user.role],
@@ -45,16 +47,21 @@ export const login = async (req, res) => {
     throw new Error("Invalid Password");
   }
   const payload = {
-    _id: user.id,
+    id: user.id,
     email: user.email,
     role: user.role,
-    roleLable: RoleLabels[user.role],
+    roleLabel: RoleLabels[user.role],
   };
-  return res.status(200).json({
-    ...payload,
-    token: generateToken(payload),
-  });
+  return sendResponse(
+    res,
+    {
+      ...payload,
+      token: generateToken(payload),
+    },
+    "Login successful"
+  );
 };
+
 export const allUsers = async (req, res) => {
   const users = await User.find({});
   res.status(200).json(users);
@@ -63,14 +70,15 @@ export const allUsers = async (req, res) => {
 export const getUser = async (req, res) => {
   res.status(200).json(req.user);
 };
+
 export const logout = async (req, res) => {
-  const token =await getTokenFromHeader(req);
+  const token = await getTokenFromHeader(req);
   const decoded = jwt.decode(token);
   if (!token) {
     res.status(401);
     throw new Error("Not authorized, no token");
   }
-  console.log("Decoded Token:", decoded,token);
+  console.log("Decoded Token:", decoded, token);
   if (!decoded || !decoded.exp) {
     throw new Error("Invalid Token");
   }

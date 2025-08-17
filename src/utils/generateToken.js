@@ -8,7 +8,7 @@ const generateToken = (payload) => {
   return jwt.sign(
     { ...payload }, // payload
     process.env.JWT_SECRET, // secret key (store in .env)
-    { expiresIn: "1h" } // token expiry
+    { expiresIn: "7d" } // token expiry
   );
 };
 

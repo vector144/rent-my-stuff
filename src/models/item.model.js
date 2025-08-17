@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
-import { PriceType } from "../enums/priceType.enum";
+import { PriceType } from "../enums/priceType.enum.js";
+import { Categories } from "../enums/categories.enum.js";
+
+// This code defines a Mongoose schema for an Item model, which includes fields such as name, description, price, priceType, ownerID, images, category, location, createdAt, and isAvalible. The schema also includes validation for certain fields and sets default values where appropriate. The model is then exported for use in other parts of the application.
+// The schema is designed to store information about items that can be listed for sale or rent,
 
 const ItemSchema = mongoose.Schema(
   {
     name: {
-      type: string,
+      type: String,
       required: true,
       maxLength: 100,
     },
     description: {
       type: String,
       required: true,
-      maxLenght: 500,
+      maxLength: 500,
     },
     price: {
       type: Number,
@@ -44,7 +48,7 @@ const ItemSchema = mongoose.Schema(
     category: {
       required: true,
       type: String,
-      enum: ["electronics", "furniture", "clothing", "books", "other"],
+      enum: Object.values(Categories),
     },
     location: {
       type: String,
@@ -54,7 +58,7 @@ const ItemSchema = mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    isAvalible: {
+    isAvailable: {
       type: Boolean,
       required: true,
       default: true,
@@ -62,3 +66,5 @@ const ItemSchema = mongoose.Schema(
   },
   { timeStamps: true }
 );
+const Item = mongoose.model("Item", ItemSchema);
+export default Item;

@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import authRouter from "./routes/auth.routes.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
-// import itemRoutes from './routes/item.routes.js';
+import itemRouter from "./routes/item.routes.js";
 // import bookingRoutes from './routes/booking.routes.js';
 // import reviewRoutes from './routes/review.routes.js';
 // import { notFound, errorHandler } from './middlewares/error.middleware.js';
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
-// app.use('/api/items', itemRoutes);
+app.use('/api/items', itemRouter);
 // app.use('/api/bookings', bookingRoutes);
 // app.use('/api/reviews', reviewRoutes);
 
