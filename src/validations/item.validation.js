@@ -21,3 +21,7 @@ export const itemSchema = Joi.object({
   images: Joi.array().required().label("Images"),
   id: Joi.string().optional().label("Item ID"),
 });
+
+export const getItemSchema=Joi.object({
+  id: Joi.objectId().required().label("Item ID"),
+})

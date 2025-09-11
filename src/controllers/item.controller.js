@@ -47,3 +47,23 @@ export const saveItem = async (req, res) => {
     return sendResponse(res, item, "Item created successfully");
   }
 };
+export const getItem = async (req, res) => {
+  const { id } = req.body;
+  const user = req.user;
+  console.log("User ID:", user.id);
+  const data = await Item.findOne({ _id: id, ownerID: user.id });
+  if (!data) {
+    return sendResponse(res, null, "Item not found", 400, false);
+  }
+  return sendResponse(res, data, "Item fetched successfully");
+};
+export const deleteItem = async (req, res) => {
+  const { id } = req.body;
+  const user = req.user;
+  console.log("User ID:", user.id);
+  const data = await Item.findOne({ _id: id, ownerID: user.id });
+  if (!data) {
+    return sendResponse(res, null, "Item not found", 400, false);
+  }
+  return sendResponse(res, data, "Item fetched successfully");
+};
